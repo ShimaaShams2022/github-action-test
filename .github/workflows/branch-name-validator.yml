@@ -3,8 +3,7 @@ name: Branch Name Validation
 on:
   pull_request:
     branches:
-      - '*' # يشمل جميع الفروع
-
+      - '*' 
 jobs:
   validate-branch-name:
     runs-on: ubuntu-latest
