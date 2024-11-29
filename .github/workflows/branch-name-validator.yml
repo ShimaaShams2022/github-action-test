@@ -3,7 +3,7 @@ name: Branch Name Validation
 on:
   pull_request:
     branches:
-      - '*'
+      - '*' # يشمل جميع الفروع
 
 jobs:
   validate-branch-name:
@@ -11,19 +11,22 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2 # لتحميل الكود من المستودع
 
       - name: Set script permissions
-        run: chmod +x ./.github/scripts/validate-branch-name.sh
+        run: chmod +x ./.github/scripts/validate-branch-name.sh # إعطاء السكريبت صلاحيات التنفيذ
 
       - name: Get branch name
         id: get_branch
         run: |
-          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
-            BRANCH_NAME=${GITHUB_HEAD_REF}
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "branch=${{ github.head_ref }}" >> $GITHUB_ENV
           else
-            BRANCH_NAME=${GITHUB_REF#refs/heads/}
+            echo "branch=${{ github.ref#refs/heads/ }}" >> $GITHUB_ENV
           fi
 
+      - name: Debug branch name
+        run: echo "Branch name is: ${{ env.branch }}" # عرض اسم الفرع للتأكد
+
       - name: Validate Branch Name
-        run: ./.github/scripts/validate-branch-name.sh ${{ steps.get_branch.outputs.branch }}
+        run: ./.github/scripts/validate-branch-name.sh ${{ env.branch }} # تمرير اسم الفرع للسكريبت
