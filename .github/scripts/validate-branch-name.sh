@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-# Get the branch name from the argument or the current branch if no argument is provided
-BRANCH_NAME=${1:-$(git rev-parse --abbrev-ref HEAD)}
-
+BRANCH_NAME=${1:-$(git rev-parse --abbrev-ref HEAD)} 
 # The regex pattern
 PATTERN= '^(master|main|develop){1}$|^(feature|fix|hotfix|release/enhancement)\/.+$' 
 
