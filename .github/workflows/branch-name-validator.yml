@@ -3,18 +3,14 @@ name: Branch Name Validation
 on:
   pull_request:
     branches:
-      - '*' # يشمل جميع الفروع
-
+      - '*'
 jobs:
   validate-branch-name:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2 # لتحميل الكود من المستودع
-
-      - name: Set script permissions
-        run: chmod +x ./.github/scripts/validate-branch-name.sh # إعطاء السكريبت صلاحيات التنفيذ
+        uses: actions/checkout@v2
 
       - name: Get branch name
         id: get_branch
@@ -26,7 +22,7 @@ jobs:
           fi
 
       - name: Debug branch name
-        run: echo "Branch name is: ${{ env.branch }}" # عرض اسم الفرع للتأكد
+        run: echo "Branch name is:${{ env.branch }}
 
       - name: Validate Branch Name
-        run: ./.github/scripts/validate-branch-name.sh ${{ env.branch }} # تمرير اسم الفرع للسكريبت
+        run: ./.github/scripts/validate-branch-name.sh ${{ env.branch }}
